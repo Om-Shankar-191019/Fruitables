@@ -40,12 +40,6 @@ const Testimonial = () => {
         <ClientChit />
         <ClientChit />
         <ClientChit />
-        <ClientChit />
-        <ClientChit />
-        <ClientChit />
-        <ClientChit />
-        <ClientChit />
-        <ClientChit />
       </div>
     </div>
   );
