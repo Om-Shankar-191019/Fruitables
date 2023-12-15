@@ -9,6 +9,7 @@ import { setAllProducts } from "./redux/slices/productSlice";
 const App = () => {
   const dispatch = useDispatch();
   const [isSticky, setIsSticky] = useState(false);
+
   useEffect(() => {
     const getAllProducts = async () => {
       try {

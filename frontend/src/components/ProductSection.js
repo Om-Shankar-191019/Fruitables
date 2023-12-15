@@ -3,10 +3,10 @@ import { filterCategories } from "../constants";
 import CategoryPills from "./CategoryPills";
 import { useSelector } from "react-redux";
 import ProductCard from "./ProductCard";
+import NoItemFound from "./NoItemFound";
 
 const ProductSection = () => {
   const products = useSelector((state) => state.products.allItems);
-  console.log(products);
   const [filterBy, setFilterBy] = useState("all products");
   const [filteredData, setFilteredData] = useState([]);
 
@@ -46,7 +46,7 @@ const ProductSection = () => {
       <div className="flex items-center justify-around flex-wrap gap-y-4">
         {filterCategories.map((item, index) => (
           <CategoryPills
-            key={item + index}
+            key={`categorypills-${index}`}
             category={item}
             handleFiltrization={handleFiltrization}
             isActive={filterBy}
@@ -56,12 +56,11 @@ const ProductSection = () => {
       <div className="flex flex-wrap justify-around gap-6 gap-y-12">
         {filteredData.length > 0 ? (
           filteredData.map((item, index) => (
-            <ProductCard key={index + item} {...item} />
+            <ProductCard key={`productcard-${index}`} {...item} />
           ))
         ) : (
           <div className="py-12 ">
-            {" "}
-            <h2 className="text-2xl text-center ">No item found</h2>{" "}
+            <NoItemFound />
           </div>
         )}
       </div>
