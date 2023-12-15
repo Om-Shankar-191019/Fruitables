@@ -41,7 +41,7 @@ const Shop = () => {
           handleFilter={handleFilter}
           currentAppliedFilter={currentAppliedFilter}
         />
-        <Pagination />
+        {/* <Pagination /> */}
       </div>
       <div className="flex flex-wrap gap-4">
         {filteredData.length > 0 ? (
