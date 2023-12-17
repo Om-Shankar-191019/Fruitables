@@ -1,9 +1,8 @@
+const cloudinary = require("cloudinary").v2;
 const Product = require("../Models/Product");
 const { StatusCodes } = require("http-status-codes");
 
 const createProduct = async (req, res) => {
-  const { name, price, image, category, subCategory, description } = req.body;
-
   const product = await Product.create(req.body);
   res.status(StatusCodes.OK).json({ product });
 };
@@ -19,4 +18,27 @@ const getProduct = async (req, res) => {
   res.status(StatusCodes.OK).json({ product });
 };
 
-module.exports = { getAllProducts, createProduct, getProduct };
+const uploadImage = async (req, res) => {
+  // console.log(req.files.image);
+  const result = await cloudinary.uploader.upload(
+    req.files.image.tempFilePath,
+    {
+      use_filename: true,
+      folder: "fruitable",
+    }
+  );
+  fs.unlinkSync(req.files.image.tempFilePath);
+  // console.log(result);
+  res.send({ image: { src: result.secure_url } });
+};
+const updateProduct = async (req, res) => {};
+const deleteProduct = async (req, res) => {};
+
+module.exports = {
+  getAllProducts,
+  createProduct,
+  getProduct,
+  uploadImage,
+  updateProduct,
+  deleteProduct,
+};
