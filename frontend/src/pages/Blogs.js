@@ -1,11 +1,15 @@
 import React from "react";
 import NoItemFound from "../components/NoItemFound";
+import ProductDescription from "./ProductDescription";
 
 const Blogs = () => {
   return (
-    <div>
-      <NoItemFound />
-    </div>
+    <>
+      <ProductDescription />
+      <ProductDescription />
+      <ProductDescription />
+      <ProductDescription />
+    </>
   );
 };
 

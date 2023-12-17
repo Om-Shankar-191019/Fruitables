@@ -13,4 +13,10 @@ const getAllProducts = async (req, res) => {
   res.status(StatusCodes.OK).json({ products });
 };
 
-module.exports = { getAllProducts, createProduct };
+const getProduct = async (req, res) => {
+  const { id } = req.params;
+  const product = await Product.findById(id);
+  res.status(StatusCodes.OK).json({ product });
+};
+
+module.exports = { getAllProducts, createProduct, getProduct };

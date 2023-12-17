@@ -4,6 +4,7 @@ const express = require("express");
 const connect = require("./config/db");
 const notFound = require("./middlewares/not-found");
 const productRouter = require("./Routes/productRoute");
+const userRouter = require("./Routes/userRoute");
 const errorHandler = require("./middlewares/error-handler");
 const cors = require("cors");
 const app = express();
@@ -16,6 +17,7 @@ app.get("/products", (req, res) => {
 
 //routes
 app.use("/api/v1", productRouter);
+app.use("/api/v1", userRouter);
 
 app.use(notFound);
 app.use(errorHandler);

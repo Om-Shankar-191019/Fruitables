@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { truncateString } from "../utility";
-const ProductCard = ({ image, name, description, price }) => {
+const ProductCard = ({ image, name, description, price, _id }) => {
   const truncateDescription = truncateString(45, description);
+
   return (
     <div className="flex flex-col w-64 items-center gap-4 rounded-md border-1 border-slate-gray shadow-md hover:shadow-2xl duration-300">
-      <Link to="#">
+      <Link to={`/description/${_id}`}>
         <div className="flex flex-col items-center gap-2">
           <div className="h-40 w-full mb-4">
             <img
