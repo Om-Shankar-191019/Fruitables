@@ -1,11 +1,24 @@
 import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { FcMenu } from "react-icons/fc";
 import { IoCloseOutline } from "react-icons/io5";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutAction } from "../redux/slices/userSlice";
 const Header = () => {
   const [showNavLinks, SetShowNavLinks] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const loginUser = useSelector((state) => state.user.currentUser);
+
+  const goToLoginPage = () => {
+    navigate("/login");
+  };
+
+  const handleLogout = () => {
+    dispatch(logoutAction());
+  };
 
   return (
     <header className="px-4 sm:px-16 py-6 bg-white ">
@@ -44,12 +57,39 @@ const Header = () => {
         </nav>
         <div className="hidden md:flex items-center gap-6">
           <div className="relative">
-            <FaShoppingCart className="cursor-pointer" size={20} />
+            <FaShoppingCart className="cursor-pointer" size={24} />
             <div className="absolute w-5 h-5 -top-3 -right-3 bg-theme-yellow flex items-center justify-center text-black rounded-full p-2">
               6
             </div>
           </div>
-          <FaRegCircleUser className="cursor-pointer" size={20} />
+          {loginUser && (
+            <div
+              className="flex gap-2 items-center  border-theme-green px-2 py-1 bg-primary cursor-pointer rounded-md"
+              onClick={handleLogout}
+            >
+              <span>Log out</span>
+              {loginUser.image ? (
+                <div className="h-8 w-8 overflow-hidden rounded-full p-[1px] border border-theme-green">
+                  <img
+                    src={loginUser.image}
+                    className="w-full h-full rounded-full"
+                  />
+                </div>
+              ) : (
+                <FaRegCircleUser className="cursor-pointer" size={24} />
+              )}
+            </div>
+          )}
+
+          {!loginUser && (
+            <div
+              className="flex gap-2 items-center  border-theme-green px-2 py-1 bg-primary cursor-pointer rounded-md"
+              onClick={goToLoginPage}
+            >
+              <span>Login</span>
+              <FaRegCircleUser className="cursor-pointer" size={24} />
+            </div>
+          )}
         </div>
 
         {/* mobile */}
@@ -128,7 +168,34 @@ const Header = () => {
                   6
                 </div>
               </div>
-              <FaRegCircleUser className="cursor-pointer -mr-4" size={20} />
+              {loginUser && (
+                <div
+                  className="flex gap-2 items-center  border-theme-green px-2 py-1 bg-primary cursor-pointer rounded-md"
+                  onClick={handleLogout}
+                >
+                  <span>Log out</span>
+                  {loginUser.image ? (
+                    <div className="h-8 w-8 overflow-hidden rounded-full p-[1px] border border-theme-green">
+                      <img
+                        src={loginUser.image}
+                        className="w-full h-full rounded-full"
+                      />
+                    </div>
+                  ) : (
+                    <FaRegCircleUser className="cursor-pointer" size={24} />
+                  )}
+                </div>
+              )}
+
+              {!loginUser && (
+                <div
+                  className="flex gap-2 items-center  border-theme-green px-2 py-1 bg-primary cursor-pointer rounded-md"
+                  onClick={goToLoginPage}
+                >
+                  <span>Login</span>
+                  <FaRegCircleUser className="cursor-pointer" size={24} />
+                </div>
+              )}
             </div>
           </nav>
         )}

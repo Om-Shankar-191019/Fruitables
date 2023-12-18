@@ -6,10 +6,19 @@ const notFound = require("./middlewares/not-found");
 const productRouter = require("./Routes/productRoute");
 const userRouter = require("./Routes/userRoute");
 const errorHandler = require("./middlewares/error-handler");
+const cloudinary = require("cloudinary").v2;
+const fileUpload = require("express-fileupload");
+
 const cors = require("cors");
 const app = express();
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
 app.use(cors());
+app.use(fileUpload({ useTempFiles: true }));
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
 
 app.get("/products", (req, res) => {
   res.json({ message: "working" });

@@ -37,3 +37,7 @@ export const filterCategories = [
 
 export const noItemFoundImageUrl =
   "https://img.freepik.com/free-vector/no-data-concept-illustration_114360-2506.jpg?size=626&ext=jpg&ga=GA1.2.1221302854.1694593979&semt=ais";
+
+// export  const usericon = "https://cdn-icons-png.flaticon.com/128/456/456212.png";
+export const usericon =
+  "https://t3.ftcdn.net/jpg/06/26/94/72/240_F_626947211_PQwqzBk59MBabSFHW9gcovCxtFqA9ZfR.jpg";

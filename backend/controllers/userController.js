@@ -4,10 +4,16 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const register = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, image } = req.body;
+  const userExists = await User.findOne({ email });
+  if (userExists) {
+    res.status(400);
+    throw new Error("User already exists");
+  }
+
   const salt = await bcrypt.genSalt(10);
   const hashPassword = await bcrypt.hash(password, salt);
-  const userData = { username, email, password: hashPassword };
+  const userData = { username, email, password: hashPassword, image };
   const user = await User.create(userData);
 
   const token = jwt.sign(
@@ -15,7 +21,10 @@ const register = async (req, res) => {
     process.env.JWT_SECRET,
     { expiresIn: process.env.JWT_LIFETIME }
   );
-  res.status(StatusCodes.OK).json({ user: { username: user.username }, token });
+  res
+    .cookie("access_token", token, { httpOnly: true })
+    .status(StatusCodes.OK)
+    .json({ user: { username: user.username } });
 };
 
 const login = async (req, res) => {
@@ -38,7 +47,12 @@ const login = async (req, res) => {
     { expiresIn: process.env.JWT_LIFETIME }
   );
 
-  res.status(StatusCodes.OK).json({ user: { username: user.username }, token });
+  res
+    .cookie("access_token", token, { httpOnly: true })
+    .status(StatusCodes.OK)
+    .json({
+      user: { username: user.username, email: user.email, image: user.image },
+    });
 };
 
 module.exports = { register, login };

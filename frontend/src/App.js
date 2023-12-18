@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import { fetchAllProducts } from "./axios";
 import { useDispatch } from "react-redux";
 import { setAllProducts } from "./redux/slices/productSlice";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -43,6 +44,7 @@ const App = () => {
         <Header />
       </div>
       <Outlet />
+      <Toaster />
     </div>
   );
 };

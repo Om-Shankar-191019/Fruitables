@@ -1,4 +1,5 @@
 const cloudinary = require("cloudinary").v2;
+const fs = require("fs");
 const Product = require("../Models/Product");
 const { StatusCodes } = require("http-status-codes");
 
@@ -19,7 +20,8 @@ const getProduct = async (req, res) => {
 };
 
 const uploadImage = async (req, res) => {
-  // console.log(req.files.image);
+  console.log(req.files.image);
+
   const result = await cloudinary.uploader.upload(
     req.files.image.tempFilePath,
     {
@@ -28,7 +30,7 @@ const uploadImage = async (req, res) => {
     }
   );
   fs.unlinkSync(req.files.image.tempFilePath);
-  // console.log(result);
+
   res.send({ image: { src: result.secure_url } });
 };
 const updateProduct = async (req, res) => {};
