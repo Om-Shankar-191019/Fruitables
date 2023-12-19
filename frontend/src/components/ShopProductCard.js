@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../redux/slices/productSlice";
-import toast from "react-hot-toast";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { eitherZeroOrOne, exaggeratedPrice, getRandomNumber } from "../utility";
+
+import { Link, useNavigate } from "react-router-dom";
 
 const ShopProductCard = (item) => {
   const { name, price, image, category, _id } = item;
@@ -13,7 +12,6 @@ const ShopProductCard = (item) => {
   const handleAddToCart = () => {
     if (loggedInUser) dispatch(addToCart(item));
     else navigate("/login");
-    // toast(`${name} added to cart`);
   };
 
   return (
