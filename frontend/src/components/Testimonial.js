@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import ClientChit from "./ClientChit";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { IoIosArrowRoundForward } from "react-icons/io";
+import { testimonialClients } from "../constants";
 const Testimonial = () => {
   const slideCardRef = useRef();
 
@@ -37,9 +38,9 @@ const Testimonial = () => {
         className="flex w-full overflow-scroll scrollbar-none  scroll-smooth transition-all gap-8"
         ref={slideCardRef}
       >
-        <ClientChit />
-        <ClientChit />
-        <ClientChit />
+        {testimonialClients.map((client, index) => (
+          <ClientChit key={`testimonialClient - ${index}`} {...client} />
+        ))}
       </div>
     </div>
   );

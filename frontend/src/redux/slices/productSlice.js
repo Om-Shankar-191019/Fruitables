@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import toast from "react-hot-toast";
 
 const initialState = {
   allItems: [],
@@ -12,37 +13,47 @@ const productSlice = createSlice({
       state.allItems = [...action.payload];
     },
     addToCart: (state, action) => {
-      const index = state.cartItems.indexOf(action.payload);
-      if (index === -1) {
+      const check = state.cartItems.some((el) => el._id === action.payload._id);
+      if (!check) {
+        toast(`${action.payload.name} added to cart`);
         state.cartItems = [
           ...state.cartItems,
-          { ...action.payload, count: 1, totalPrice: action.payload.price },
+          {
+            ...action.payload,
+            count: 1,
+            totalPrice: action.payload.price,
+          },
         ];
+      } else {
+        toast("item already exist in the cart");
       }
     },
     deleteItem: (state, action) => {
-      const index = state.cartItems.indexOf(action.payload);
-      if (index !== -1) {
-        state.cartItems = [
-          ...state.cartItems.slice(0, index),
-          ...state.cartItems.slice(index + 1),
-        ];
-      }
+      const index = state.cartItems.findIndex(
+        (el) => el._id === action.payload
+      );
+      state.cartItems.splice(index, 1);
     },
     increaseItemCount: (state, action) => {
-      const index = state.cartItems.indexOf(action.payload);
+      const index = state.cartItems.findIndex(
+        (el) => el._id === action.payload
+      );
       if (index !== -1) {
-        state.cartItems[index].count += 1;
-        state.cartItems[index].totalPrice =
-          state.cartItems[index].price * state.cartItems[index].count;
+        state.cartItems[index].count += 0.5;
+        state.cartItems[index].totalPrice = Math.ceil(
+          state.cartItems[index].price * state.cartItems[index].count
+        );
       }
     },
     decreaseItemCount: (state, action) => {
-      const index = state.cartItems.indexOf(action.payload);
-      if (index !== -1 && state.cartItems[index].count > 1) {
-        state.cartItems[index].count -= 1;
-        state.cartItems[index].totalPrice =
-          state.cartItems[index].price * state.cartItems[index].count;
+      const index = state.cartItems.findIndex(
+        (el) => el._id === action.payload
+      );
+      if (index !== -1 && state.cartItems[index].count > 0.5) {
+        state.cartItems[index].count -= 0.5;
+        state.cartItems[index].totalPrice = Math.ceil(
+          state.cartItems[index].price * state.cartItems[index].count
+        );
       }
     },
   },

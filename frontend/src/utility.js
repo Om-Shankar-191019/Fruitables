@@ -15,4 +15,15 @@ export function truncateString(inputNumber, inputString) {
   return `${truncatedString}...`;
 }
 
-// Example usage:
+// export const eitherZeroOrOne = () => {
+//   return Math.floor(Math.random() * 2);
+// };
+
+// export const getRandomNumber = (min, max) => {
+//   return Math.floor(Math.random() * (max - min + 1)) + min;
+// };
+
+// export const exaggeratedPrice = (price, offPercentage) => {
+//   const exaggerated = Math.floor((offPercentage * price) / 100) + price;
+//   return exaggerated;
+// };

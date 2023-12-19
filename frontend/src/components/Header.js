@@ -6,18 +6,32 @@ import { FcMenu } from "react-icons/fc";
 import { IoCloseOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutAction } from "../redux/slices/userSlice";
+import toast from "react-hot-toast";
 const Header = () => {
   const [showNavLinks, SetShowNavLinks] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.products.cartItems);
+
   const loginUser = useSelector((state) => state.user.currentUser);
 
+  const handleCloseModal = () => {
+    SetShowNavLinks(false);
+  };
   const goToLoginPage = () => {
     navigate("/login");
+    SetShowNavLinks(false);
   };
 
   const handleLogout = () => {
     dispatch(logoutAction());
+    SetShowNavLinks(false);
+    toast("Successfully signed out");
+  };
+
+  const goToCartPage = () => {
+    navigate("/cart");
+    SetShowNavLinks(false);
   };
 
   return (
@@ -56,11 +70,13 @@ const Header = () => {
           </NavLink>
         </nav>
         <div className="hidden md:flex items-center gap-6">
-          <div className="relative">
+          <div className="relative" onClick={goToCartPage}>
             <FaShoppingCart className="cursor-pointer" size={24} />
-            <div className="absolute w-5 h-5 -top-3 -right-3 bg-theme-yellow flex items-center justify-center text-black rounded-full p-2">
-              6
-            </div>
+            {cartItems.length > 0 && (
+              <div className="absolute w-5 h-5 -top-3 -right-3 bg-theme-yellow flex items-center justify-center text-black rounded-full p-2">
+                {cartItems.length}
+              </div>
+            )}
           </div>
           {loginUser && (
             <div
@@ -95,23 +111,24 @@ const Header = () => {
         {/* mobile */}
         {showNavLinks ? (
           <IoCloseOutline
-            size={20}
-            className="flex md:hidden cursor-pointer"
+            size={32}
+            className="flex md:hidden cursor-pointer text-dark-gray"
             onClick={() => SetShowNavLinks(false)}
           />
         ) : (
           <FcMenu
             className="flex md:hidden cursor-pointer"
-            size={20}
+            size={28}
             onClick={() => SetShowNavLinks(true)}
           />
         )}
 
         {showNavLinks && (
-          <nav className="absolute right-4 sm:right-16 top-28 flex md:hidden flex-col-reverse gap-4 shadow-md py-4 pl-4 pr-8 duration-150">
+          <nav className="absolute right-4 sm:right-16 top-28 flex md:hidden flex-col-reverse gap-4 shadow-lg rounded-md py-4 pl-4 pr-8 duration-150 bg-primary">
             <div className="flex flex-col gap-2">
               <NavLink
                 to="/"
+                onClick={handleCloseModal}
                 className={({ isActive }) =>
                   isActive
                     ? "text-theme-green border-b-2 border-theme-green"
@@ -120,18 +137,10 @@ const Header = () => {
               >
                 Home
               </NavLink>
-              <NavLink
-                to="/about"
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-theme-green border-b-2 border-theme-green"
-                    : null
-                }
-              >
-                About
-              </NavLink>
+
               <NavLink
                 to="/shop"
+                onClick={handleCloseModal}
                 className={({ isActive }) =>
                   isActive
                     ? "text-theme-green  border-b-2 border-theme-green"
@@ -142,6 +151,7 @@ const Header = () => {
               </NavLink>
               <NavLink
                 to="/blogs"
+                onClick={handleCloseModal}
                 className={({ isActive }) =>
                   isActive
                     ? "text-theme-green border-b-2 border-theme-green"
@@ -150,23 +160,15 @@ const Header = () => {
               >
                 Blogs
               </NavLink>
-              <NavLink
-                to="/contact"
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-theme-green border-b-2 border-theme-green"
-                    : null
-                }
-              >
-                Contact
-              </NavLink>
             </div>
             <div className="flex  items-center justify-between gap-10">
-              <div className="relative">
+              <div className="relative" onClick={goToCartPage}>
                 <FaShoppingCart className="cursor-pointer" size={20} />
-                <div className="absolute w-5 h-5 -top-3 -right-3 bg-theme-yellow flex items-center justify-center text-black rounded-full p-2">
-                  6
-                </div>
+                {cartItems.length > 0 && (
+                  <div className="absolute w-5 h-5 -top-3 -right-3 bg-theme-yellow flex items-center justify-center text-black rounded-full p-2">
+                    {cartItems.length}
+                  </div>
+                )}
               </div>
               {loginUser && (
                 <div

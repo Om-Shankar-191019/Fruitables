@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import ShopProductCard from "../components/ShopProductCard";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import DropdownMenu from "../components/DropdownMenu";
 import Pagination from "../components/Pagination";
 import NoItemFound from "../components/NoItemFound";
+import Loader from "../components/Loader";
 
 const Shop = () => {
   const products = useSelector((state) => state.products.allItems);
   const [filteredData, setFilteredData] = useState([]);
+  const dispatch = useDispatch();
   const [currentAppliedFilter, setCurrentAppliedFilter] =
     useState("all products");
 
@@ -35,26 +37,32 @@ const Shop = () => {
     }
   };
   return (
-    <div className="px-4 sm:px-16 pt-4 pb-12">
-      <div className="pt-2 pb-4 flex flex-wrap justify-between">
-        <DropdownMenu
-          handleFilter={handleFilter}
-          currentAppliedFilter={currentAppliedFilter}
-        />
-        {/* <Pagination /> */}
-      </div>
-      <div className="flex flex-wrap gap-4">
-        {filteredData.length > 0 ? (
-          filteredData.map((item, index) => (
-            <ShopProductCard key={`shoppage-${index}`} {...item} />
-          ))
-        ) : (
-          <div className="w-full flex justify-center gap-y-5 ">
-            <NoItemFound />
+    <>
+      {!products ? (
+        <Loader />
+      ) : (
+        <div className="px-4 sm:px-16 pt-4 pb-12">
+          <div className="pt-2 pb-4 flex flex-wrap justify-between">
+            <DropdownMenu
+              handleFilter={handleFilter}
+              currentAppliedFilter={currentAppliedFilter}
+            />
+            {/* <Pagination /> */}
           </div>
-        )}
-      </div>
-    </div>
+          <div className="flex flex-wrap gap-4">
+            {filteredData.length > 0 ? (
+              filteredData.map((item, index) => (
+                <ShopProductCard key={`shoppage-${index}`} {...item} />
+              ))
+            ) : (
+              <div className="w-full flex justify-center gap-y-5 ">
+                <NoItemFound />
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
