@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 import { FaRegCircleUser } from "react-icons/fa6";
+import { IoBagAdd } from "react-icons/io5";
 import { FcMenu } from "react-icons/fc";
 import { IoCloseOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,6 +35,10 @@ const Header = () => {
     SetShowNavLinks(false);
   };
 
+  const handleAddNewProduct = () => {
+    navigate("/addNewProduct");
+  };
+
   return (
     <header className="px-4 sm:px-16 py-6 bg-white ">
       <div className=" flex items-center justify-between">
@@ -60,16 +65,26 @@ const Header = () => {
           >
             Shop
           </NavLink>
-          <NavLink
+          {/* <NavLink
             to="/blogs"
             className={({ isActive }) =>
               isActive ? "text-theme-green border-b-2 border-theme-green" : null
             }
           >
             Blogs
-          </NavLink>
+          </NavLink> */}
         </nav>
         <div className="hidden md:flex items-center gap-6">
+          {loginUser &&
+            loginUser.email === `${process.env.REACT_APP_ADMIN_EMAIL}` && (
+              <div
+                className="flex gap-2 items-center   px-2 py-1 bg-primary cursor-pointer rounded-md"
+                onClick={handleAddNewProduct}
+              >
+                <IoBagAdd size={24} />
+                <span>Add product</span>
+              </div>
+            )}
           <div className="relative" onClick={goToCartPage}>
             <FaShoppingCart className="cursor-pointer" size={24} />
             {cartItems.length > 0 && (
@@ -88,6 +103,7 @@ const Header = () => {
                 <div className="h-8 w-8 overflow-hidden rounded-full p-[1px] border border-theme-green">
                   <img
                     src={loginUser.image}
+                    alt="userImg"
                     className="w-full h-full rounded-full"
                   />
                 </div>
@@ -126,6 +142,16 @@ const Header = () => {
         {showNavLinks && (
           <nav className="absolute right-4 sm:right-16 top-28 flex md:hidden flex-col-reverse gap-4 shadow-lg rounded-md py-4 pl-4 pr-8 duration-150 bg-primary">
             <div className="flex flex-col gap-2">
+              {loginUser &&
+                loginUser.email === `${process.env.REACT_APP_ADMIN_EMAIL}` && (
+                  <div
+                    className="flex gap-2 items-center   px-2 py-1 bg-primary cursor-pointer rounded-md"
+                    onClick={handleAddNewProduct}
+                  >
+                    <IoBagAdd size={24} />
+                    <span>Add product</span>
+                  </div>
+                )}
               <NavLink
                 to="/"
                 onClick={handleCloseModal}
@@ -149,7 +175,7 @@ const Header = () => {
               >
                 Shop
               </NavLink>
-              <NavLink
+              {/* <NavLink
                 to="/blogs"
                 onClick={handleCloseModal}
                 className={({ isActive }) =>
@@ -159,7 +185,7 @@ const Header = () => {
                 }
               >
                 Blogs
-              </NavLink>
+              </NavLink> */}
             </div>
             <div className="flex  items-center justify-between gap-10">
               <div className="relative" onClick={goToCartPage}>
@@ -180,6 +206,7 @@ const Header = () => {
                     <div className="h-8 w-8 overflow-hidden rounded-full p-[1px] border border-theme-green">
                       <img
                         src={loginUser.image}
+                        alt="userImg"
                         className="w-full h-full rounded-full"
                       />
                     </div>

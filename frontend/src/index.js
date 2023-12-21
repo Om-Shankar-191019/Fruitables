@@ -18,6 +18,9 @@ import ProductDescription from "./pages/ProductDescription";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Cart from "./pages/Cart";
+import AddNewProduct from "./pages/AddNewProduct";
+import Success from "./pages/Success";
+import Cancel from "./pages/Cancel";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -28,6 +31,9 @@ const router = createBrowserRouter(
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/cart" element={<Cart />} />
+      <Route path="/addNewProduct" element={<AddNewProduct />} />
+      <Route path="/success" element={<Success />} />
+      <Route path="/cancel" element={<Cancel />} />
       <Route path="/description/:productId" element={<ProductDescription />} />
     </Route>
   )

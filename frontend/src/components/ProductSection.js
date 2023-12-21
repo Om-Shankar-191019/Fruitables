@@ -40,7 +40,7 @@ const ProductSection = () => {
   return (
     <>
       {!products ? (
-        <Loader />
+        <p> Loading....................................</p>
       ) : (
         <section className="mx-4 sm:mx-16 flex flex-col gap-12 ">
           <div className="pb-2">
@@ -60,9 +60,11 @@ const ProductSection = () => {
           </div>
           <div className="flex flex-wrap justify-around gap-6 gap-y-12">
             {filteredData.length > 0 ? (
-              filteredData.map((item, index) => (
-                <ProductCard key={`productcard-${index}`} {...item} />
-              ))
+              filteredData
+                .slice(0, 6)
+                .map((item, index) => (
+                  <ProductCard key={`productcard-${index}`} {...item} />
+                ))
             ) : (
               <div className="py-12 ">
                 <NoItemFound />

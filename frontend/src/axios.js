@@ -10,6 +10,12 @@ export const fetchSingleProduct = async (id) => {
     `${process.env.REACT_APP_SERVER_DOMAIN}/api/v1/product/${id}`
   );
 };
+export const createProduct = async (data) => {
+  return axios.post(
+    `${process.env.REACT_APP_SERVER_DOMAIN}/api/v1/createProduct`,
+    data
+  );
+};
 
 export const uploadImage = async (formData) => {
   return axios.post(
@@ -32,14 +38,3 @@ export const login = async (data) => {
     data
   );
 };
-
-// export const fetchAllProducts = async () => {
-//   try {
-//     const response = await axios.get(
-//       `${process.env.REACT_APP_SERVER_DOMAIN}/api/v1/products`
-//     );
-//     return response;
-//   } catch (error) {
-//     return error.message;
-//   }
-// };

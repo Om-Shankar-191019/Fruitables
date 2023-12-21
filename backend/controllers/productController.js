@@ -20,8 +20,6 @@ const getProduct = async (req, res) => {
 };
 
 const uploadImage = async (req, res) => {
-  console.log(req.files.image);
-
   const result = await cloudinary.uploader.upload(
     req.files.image.tempFilePath,
     {

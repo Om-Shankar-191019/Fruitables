@@ -3,6 +3,7 @@ import { MdDelete } from "react-icons/md";
 import { GoPlus } from "react-icons/go";
 import { PiMinusThin } from "react-icons/pi";
 import { useDispatch, useSelector } from "react-redux";
+import { loadStripe } from "@stripe/stripe-js";
 import {
   decreaseItemCount,
   deleteItem,
@@ -11,11 +12,13 @@ import {
 import NoItemFound from "../components/NoItemFound";
 import { shippingCharges } from "../constants";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const Cart = () => {
   const cartItems = useSelector((state) => state.products.cartItems);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const loginUser = useSelector((state) => state.user.currentUser);
   const subTotal = cartItems.reduce((acc, item) => acc + item.totalPrice, 0);
   const grandTotal = subTotal + shippingCharges;
 
@@ -23,7 +26,35 @@ const Cart = () => {
     navigate("/shop");
   };
 
-  const handleCheckout = () => {};
+  const handleCheckout = async () => {
+    if (loginUser) {
+      const stripePromise = await loadStripe(
+        process.env.REACT_APP_STRIPE_PUBLIC_KEY
+      );
+      const res = await fetch(
+        `${process.env.REACT_APP_SERVER_DOMAIN}/api/v1/handlePayment`,
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(cartItems),
+        }
+      );
+      if (res.statusCode === 500) return;
+
+      const data = await res.json();
+      console.log("response at front : ", data);
+
+      toast("Redirect to payment Gateway...!");
+      stripePromise.redirectToCheckout({ sessionId: data });
+    } else {
+      toast("You have not Login!");
+      setTimeout(() => {
+        navigate("/login");
+      }, 1000);
+    }
+  };
 
   return (
     <div className="container mx-auto my-10 p-4">

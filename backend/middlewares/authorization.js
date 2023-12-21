@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const verification = async (req, res, next) => {
   const token = req.cookies.access_token;
+  console.log(token);
   if (!token) {
     throw new Error(`Permission Denied! Token not found`);
   }

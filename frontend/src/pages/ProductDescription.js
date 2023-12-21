@@ -21,7 +21,7 @@ const ProductDescription = () => {
     };
 
     getProduct(productId);
-  }, []);
+  }, [productId]);
 
   return (
     <>

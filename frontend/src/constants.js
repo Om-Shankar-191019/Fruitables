@@ -35,6 +35,10 @@ export const filterCategories = [
   "salad",
 ];
 
+export const categories = ["fruit", "vegetable", "dry fruit"];
+
+export const subCategories = ["green veg", "salad"];
+
 export const noItemFoundImageUrl =
   "https://img.freepik.com/free-vector/no-data-concept-illustration_114360-2506.jpg?size=626&ext=jpg&ga=GA1.2.1221302854.1694593979&semt=ais";
 
@@ -42,7 +46,7 @@ export const noItemFoundImageUrl =
 export const usericon =
   "https://t3.ftcdn.net/jpg/06/26/94/72/240_F_626947211_PQwqzBk59MBabSFHW9gcovCxtFqA9ZfR.jpg";
 
-export const shippingCharges = 10;
+export const shippingCharges = 0;
 
 export const testimonialClients = [
   {

@@ -39,7 +39,7 @@ const Shop = () => {
   return (
     <>
       {!products ? (
-        <Loader />
+        <p> Loading....................................</p>
       ) : (
         <div className="px-4 sm:px-16 pt-4 pb-12">
           <div className="pt-2 pb-4 flex flex-wrap justify-between">
@@ -51,9 +51,12 @@ const Shop = () => {
           </div>
           <div className="flex flex-wrap gap-4">
             {filteredData.length > 0 ? (
-              filteredData.map((item, index) => (
-                <ShopProductCard key={`shoppage-${index}`} {...item} />
-              ))
+              filteredData
+                .slice()
+                .reverse()
+                .map((item, index) => (
+                  <ShopProductCard key={`shoppage-${index}`} {...item} />
+                ))
             ) : (
               <div className="w-full flex justify-center gap-y-5 ">
                 <NoItemFound />

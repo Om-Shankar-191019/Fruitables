@@ -13,12 +13,13 @@ const ProductDescriptionCard = (product) => {
   const handleAddToCart = () => {
     if (loggedInUser) dispatch(addToCart(product));
     else navigate("/login");
-
-    // toast(`${name} added to cart`);
   };
 
   const handleBuyNow = () => {
-    navigate("/cart");
+    if (loggedInUser) {
+      dispatch(addToCart(product));
+      navigate("/cart");
+    } else navigate("/login");
   };
   return (
     <div className="  mt-8">
@@ -36,7 +37,7 @@ const ProductDescriptionCard = (product) => {
             {subCategory ? ` (${subCategory}) ` : ""}
           </p>
           <p className="text-gray-600 mb-4">{description}</p>
-          <p className="text-lg text-blue-500 mb-4">{price} / kg</p>
+          <p className="text-lg text-blue-500 mb-4">₹ {price} / kg</p>
 
           {/* Buttons */}
           <div className="flex space-x-4">

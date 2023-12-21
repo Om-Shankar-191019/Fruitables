@@ -33,7 +33,7 @@ const ProductCard = (item) => {
             {truncateDescription}
           </p>
           <span className="text-dark-gray font-semibold px-4">
-            {price} / kg
+            ₹ {price} / kg
           </span>
         </div>
       </Link>

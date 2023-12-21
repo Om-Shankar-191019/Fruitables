@@ -12,6 +12,9 @@ const productSlice = createSlice({
     setAllProducts: (state, action) => {
       state.allItems = [...action.payload];
     },
+    addProductToStore: (state, action) => {
+      state.allItems = [...state.allItems, action.payload];
+    },
     addToCart: (state, action) => {
       const check = state.cartItems.some((el) => el._id === action.payload._id);
       if (!check) {
@@ -39,7 +42,7 @@ const productSlice = createSlice({
         (el) => el._id === action.payload
       );
       if (index !== -1) {
-        state.cartItems[index].count += 0.5;
+        state.cartItems[index].count += 1;
         state.cartItems[index].totalPrice = Math.ceil(
           state.cartItems[index].price * state.cartItems[index].count
         );
@@ -49,8 +52,8 @@ const productSlice = createSlice({
       const index = state.cartItems.findIndex(
         (el) => el._id === action.payload
       );
-      if (index !== -1 && state.cartItems[index].count > 0.5) {
-        state.cartItems[index].count -= 0.5;
+      if (index !== -1 && state.cartItems[index].count > 1) {
+        state.cartItems[index].count -= 1;
         state.cartItems[index].totalPrice = Math.ceil(
           state.cartItems[index].price * state.cartItems[index].count
         );
@@ -61,6 +64,7 @@ const productSlice = createSlice({
 
 export const {
   setAllProducts,
+  addProductToStore,
   addToCart,
   deleteItem,
   increaseItemCount,

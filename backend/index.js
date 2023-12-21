@@ -7,11 +7,15 @@ const productRouter = require("./Routes/productRoute");
 const userRouter = require("./Routes/userRoute");
 const errorHandler = require("./middlewares/error-handler");
 const cloudinary = require("cloudinary").v2;
+const Stripe = require("stripe");
 const fileUpload = require("express-fileupload");
+const cookieParser = require("cookie-parser");
+const paymentRouter = require("./Routes/paymentRoute");
 
 const cors = require("cors");
 const app = express();
 app.use(express.json({ limit: "10mb" }));
+app.use(cookieParser());
 app.use(cors());
 app.use(fileUpload({ useTempFiles: true }));
 cloudinary.config({
@@ -27,6 +31,7 @@ app.get("/products", (req, res) => {
 //routes
 app.use("/api/v1", productRouter);
 app.use("/api/v1", userRouter);
+app.use("/api/v1", paymentRouter);
 
 app.use(notFound);
 app.use(errorHandler);
